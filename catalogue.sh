@@ -1,6 +1,6 @@
 dirct=$(pwd)
-sudo curl -sL https://rpm.nodesource.com/setup_lts.x | bash
-sudo dnf install nodejs -y
+sudo yum install https://rpm.nodesource.com/pub_21.x/nodistro/repo/nodesource-release-nodistro-1.noarch.rpm -y
+sudo yum install nodejs -y --setopt=nodesource-nodejs.module_hotfixes=1
 sudo useradd roboshop
 sudo curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip
 sudo mkdir /app
