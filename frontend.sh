@@ -8,5 +8,5 @@ yum install unzip -y
 sudo unzip /tmp/frontend.zip
 systemctl enable nginx
 systemctl start nginx
-cp $(dirct)/config/roboshop.conf /etc/nginx/default.d/roboshop.conf
+cp dirct/config/roboshop.conf /etc/nginx/default.d/roboshop.conf
 systemctl restart nginx
