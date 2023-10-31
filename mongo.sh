@@ -1,5 +1,5 @@
 dirct=$(pwd)
-cp $dirct/config/mongo.repo  /etc/yum.repos.d/mongo.repo
+sudo cp $dirct/config/mongo.repo  /etc/yum.repos.d/mongo.repo
 sudo dnf install mongodb-org -y
 sudo systemctl start mongod
 sudo systemctl ebable mongod
