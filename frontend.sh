@@ -1,5 +1,4 @@
-dirct = $(pwd)
-
+dirct=$(pwd)
 sudo dnf install nginx -y
 
 curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend.zip
