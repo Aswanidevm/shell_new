@@ -1,3 +1,5 @@
+dir = $pwd
+
 sudo dnf install nginx -y
 
 curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend.zip
@@ -7,5 +9,5 @@ yum install unzip -y
 sudo unzip /tmp/frontend.zip
 systemctl enable nginx
 systemctl start nginx
-cp config/roboshop.conf /etc/nginx/default.d/roboshop.conf
+cp dir/config/roboshop.conf /etc/nginx/default.d/roboshop.conf
 systemctl restart nginx
