@@ -6,5 +6,5 @@ cd /usr/share/nginx/html
 rm -rf *
 unzip /tmp/frontend.zip
 
-cp confid/roboshop.conf /etc/nginx/default.d/roboshop.conf
+cp config/roboshop.conf /etc/nginx/default.d/roboshop.conf
 systemctl restart nginx
