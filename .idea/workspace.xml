@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c71bccc7-a006-4784-b210-f36c2c010a37" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/config/roboshop.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend.sh" afterDir="false" />
+    <list default="true" id="c71bccc7-a006-4784-b210-f36c2c010a37" name="Changes" comment="efw3rgh">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend.sh" beforeDir="false" afterPath="$PROJECT_DIR$/frontend.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,6 +116,27 @@
       <option name="presentableId" value="Default" />
       <updated>1698746681086</updated>
     </task>
+    <task id="LOCAL-00001" summary="efw3rgh">
+      <option name="closed" value="true" />
+      <created>1698755757016</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1698755757016</updated>
+    </task>
+    <task id="LOCAL-00002" summary="efw3rgh">
+      <option name="closed" value="true" />
+      <created>1698756128456</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1698756128456</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="efw3rgh" />
+    <option name="LAST_COMMIT_MESSAGE" value="efw3rgh" />
   </component>
 </project>
