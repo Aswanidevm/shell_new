@@ -1,5 +1,11 @@
 source common.sh
 
+mysql_root_password=$1
+if [ -z "${mysql_root_password}" ]; then
+  echo  " Missing MySQL Root Password argument "
+  exit 1
+fi
+
 echo " Disabling Mysql "
 dnf module disable mysql -y
 status $?
@@ -17,6 +23,8 @@ systemctl enable mysqld
 systemctl start mysqld
 status $?
 
-mysql_secure_installation --set-root-pass RoboShop@1
-mysql -uroot -pRoboShop@1
+echo show databases | mysql -uroot -p${mysql_root_password} &>>${log}
+if [ $? -ne 0 ]; then
+  mysql_secure_installation --set-root-pass ${mysql_root_password}  &>>${log}
+fi
 status $?
