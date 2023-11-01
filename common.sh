@@ -15,7 +15,7 @@ aftifacts_setup()
       useradd roboshop
   fi
 
-  curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}
+  curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip
 
 
   if [! -d "/app" ]; then
