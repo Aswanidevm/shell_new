@@ -1,6 +1,7 @@
 dirct=$(pwd)
-touch /tmp/log_file
 rm -rf /tmp/log_file
+touch /tmp/log_file
+
 
 aftifacts_setup()
 {
@@ -16,10 +17,10 @@ aftifacts_setup()
   curl -L -o /tmp/dispatch.zip https://roboshop-artifacts.s3.amazonaws.com/dispatch.
 
   mkdir /app
-
+  rm -rf /app/*
   cd /app
 
-  rm -rf *
+
 
   unzip /tmp/dispatch.zip
 
@@ -32,7 +33,7 @@ aftifacts_setup
 go mod init dispatch
 go get
 go build
-cp $(dirct)/config/$(component).service /etc/systemd/system/$(component).service
+cp $dirct/config/$component.service /etc/systemd/system/$component.service
 systemctl daemon-reload
 systemctl enable dispatch
 systemctl start dispatch
