@@ -33,8 +33,10 @@ aftifacts_setup()
    mkdir /app
   fi
   status $?
+
   rm -rf /app/* &>> ${log}
   cd /app
+
   echo " Unziping  ${component} files"
   unzip /tmp/${component}.zip &>> ${log}
   status $?
@@ -42,12 +44,20 @@ aftifacts_setup()
 
 systemd_config()
 {
+
+
   cp ${dirct}/config/${component}.service /etc/systemd/system/${component}.service &>> ${log}
   status $?
+
+
   systemctl daemon-reload
   status $?
+
+
   systemctl enable ${component} &>> ${log}
   status $?
+
+
   systemctl start ${component} &>> ${log}
   status $?
 }
@@ -56,20 +66,23 @@ nginx()
   echo " Istalling Nginx"
   dnf install nginx -y &>> ${log}
   status $?
+
 #curl -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip
   echo " Removing contents from Nginx/html "
   rm -rf /usr/share/nginx/html* &>> ${log}
   status $?
+
   echo " Artifact setup "
   aftifacts_setup
   cp * /usr/share/nginx/html &>> ${log}
 
-#yum install unzip -y
-#unzip /tmp/frontend.zip
+ #yum install unzip -y
+ #unzip /tmp/frontend.zip
   echo " Enabling nginx "
   systemctl enable nginx
   systemctl start nginx
   status $?
+
   echo "copying roboshop configuraton file"
   cp ${dirct}/config/roboshop.conf /etc/nginx/default.d/roboshop.conf
   systemctl restart nginx
@@ -77,11 +90,25 @@ nginx()
 }
 golang()
 {
-dnf install golang -y &>> ${log}
-aftifacts_setup
-go mod init dispatch &>> ${log}
-go get
-go build
-systemd_config
+  echo " Installing golang "
+  dnf install golang -y &>> ${log}
+  status $?
+
+  echo " Artifacts basic setup "
+  aftifacts_setup
+  status $?
+
+  echo " Artifacts basic setup "
+  go mod init dispatch &>> ${log}
+  status $?
+
+  echo " Artifacts basic setup "
+  go get
+  go build
+  status $?
+
+  echo " Systemd configuraton "
+  systemd_config
+
 }
 
