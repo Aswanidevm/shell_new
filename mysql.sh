@@ -1,6 +1,6 @@
 dirct=$(pwd)
 dnf module disable mysql -y
-cp dirct/config/mysql.repo /etc/yum.repos.d/mysql.repo
+cp $dirct/config/mysql.repo /etc/yum.repos.d/mysql.repo
 dnf install mysql-community-server -y
 systemctl enable mysqld
 systemctl start mysqld
