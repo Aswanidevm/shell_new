@@ -6,9 +6,9 @@ log=/tmp/log_file.txt
 status()
 {
   if [ $1 -eq 0 ]; then
-    echo " Sucess"
+    echo " \n Sucess"
   else
-    echo " failed with code $1 "
+    echo " \n failed with code $1 "
   fi
 }
 aftifacts_setup()
@@ -16,20 +16,21 @@ aftifacts_setup()
   getent passwd roboshop &>> ${log}
 
   if [ $? -eq 0 ]; then
-      echo "yes the user exists"
+      echo " \n Yes the user exists "
   else
-      echo "No, the user does not exist"
+      echo " \n No, the user does not exist adding user roboshop "
       useradd roboshop
   fi
   status $?
 
+  echo " \n Downloading roboshop-artifacts.s3.amazonaws.com/${component}.zip"
   curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>> ${log}
   status $?
 
   if [ -d "/app" ]; then
-    echo " avalable app directory"
+    echo " \n Avalable app directory "
   else
-   echo " Create app directory"
+   echo " \n Create app directory"
    mkdir /app
   fi
   status $?
@@ -37,7 +38,7 @@ aftifacts_setup()
   rm -rf /app/* &>> ${log}
   cd /app
 
-  echo " Unziping  ${component} files"
+  echo " \n Unziping  ${component} files"
   unzip /tmp/${component}.zip &>> ${log}
   status $?
 }
@@ -45,69 +46,74 @@ aftifacts_setup()
 systemd_config()
 {
 
-
+  echo " \n Copying ${component}.service file"
   cp ${dirct}/config/${component}.service /etc/systemd/system/${component}.service &>> ${log}
   status $?
 
 
   systemctl daemon-reload
-  status $?
 
-
+  echo " \n Enabling ${component} service"
+  systemctl start ${component} &>> ${log}
   systemctl enable ${component} &>> ${log}
   status $?
 
-
-  systemctl start ${component} &>> ${log}
+  echo " \n Restarting ${component} service"
+  systemctl restart ${component} &>> ${log}
   status $?
+
 }
+
+
 nginx()
 {
-  echo " Istalling Nginx"
+  echo " \n Istalling Nginx"
   dnf install nginx -y &>> ${log}
   status $?
 
 #curl -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip
-  echo " Removing contents from Nginx/html "
+  echo " \n Removing contents from Nginx/html "
   rm -rf /usr/share/nginx/html* &>> ${log}
   status $?
 
-  echo " Artifact setup "
+  echo " \n Artifact setup "
   aftifacts_setup
   cp * /usr/share/nginx/html &>> ${log}
 
  #yum install unzip -y
  #unzip /tmp/frontend.zip
-  echo " Enabling nginx "
+  echo " \n Enabling nginx "
   systemctl enable nginx
   systemctl start nginx
   status $?
 
-  echo "copying roboshop configuraton file"
+  echo " \n Copying roboshop configuraton file"
   cp ${dirct}/config/roboshop.conf /etc/nginx/default.d/roboshop.conf
   systemctl restart nginx
   status $?
 }
+
+
 golang()
 {
-  echo " Installing golang "
+  echo " \n Installing golang "
   dnf install golang -y &>> ${log}
   status $?
 
-  echo " Artifacts basic setup "
+  echo " \n Artifacts basic setup "
   aftifacts_setup
   status $?
 
-  echo " Artifacts basic setup "
+  echo " \n Artifacts basic setup "
   go mod init dispatch &>> ${log}
   status $?
 
-  echo " Artifacts basic setup "
+  echo " \n Artifacts basic setup "
   go get
   go build
   status $?
 
-  echo " Systemd configuraton "
+  echo " \n Systemd configuraton "
   systemd_config
 
 }
