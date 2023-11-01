@@ -20,8 +20,6 @@ aftifacts_setup()
   rm -rf /app/*
   cd /app
 
-
-
   unzip /tmp/dispatch.zip
 
 }
