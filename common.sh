@@ -1,7 +1,7 @@
 dirct=$(pwd)
 cd /tmp/
 rm -rf *
-log=/tmp/log_file.txt
+log=/tmp/log.txt
 
 status()
 {
@@ -9,6 +9,7 @@ status()
     echo "   Sucess"
   else
     echo "   failed with code $1 "
+    exit 1
   fi
 }
 aftifacts_setup()
@@ -50,20 +51,44 @@ systemd_config()
   cp ${dirct}/config/${component}.service /etc/systemd/system/${component}.service &>> ${log}
   status $?
 
+  sed -i -e "s/ROBOSHOP_USER_PASSWORD/${roboshop_app_password}/" /etc/systemd/system/${component}.service &>>${log}
 
   systemctl daemon-reload
 
-  echo "   Enabling ${component} service"
+  echo " Enabling ${component} service"
   systemctl start ${component} &>> ${log}
   systemctl enable ${component} &>> ${log}
   status $?
 
-  echo "   Restarting ${component} service"
+  echo " Restarting ${component} service"
   systemctl restart ${component} &>> ${log}
   status $?
 
 }
 
+schema_setup() {
+  if [ "${schema_type}" == "mongo" ]; then
+    echo"Copy MongoDB Repo File"
+    cp ${code_dir}/config/mongodb.repo /etc/yum.repos.d/mongodb.repo &>>${log}
+    status $?
+
+    echo "Install Mongo Client"
+    yum install mongodb-org-shell -y &>>${log}
+    status $?
+
+    echo "Load Schema"
+    mongo --host mongodb.myprojecdevops.info </app/schema/${component}.js &>>${log}
+    status $?
+  elif [ "${schema_type}" == "mysql" ]; then
+    echo "Install MySQL Client"
+    yum install mysql -y &>>${log}
+    status $?
+
+    echo "Load Schema"
+    mysql -h mysql.myprojecdevops.info -uroot -p${mysql_root_password} < /app/schema/shipping.sql &>>${log}
+    status $?
+  fi
+}
 
 nginx()
 {
@@ -134,18 +159,9 @@ java()
   mv target/shipping-1.0.jar shipping.jar
   status $?
 
+  schema_setup
+
   systemd_config
-
-  echo " Installing1 mysql"
-  dnf install mysql -y
-  status $?
-
-  echo " importing schema"
-  mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -pRoboShop@1 < /app/schema/shipping.sql
-  status $?
-
-  systemctl restart shipping
-
 
 }
 
@@ -163,17 +179,11 @@ nodejs()
   npm install
   status $?
 
+  schema_setup
+  
   systemd_config
 
-  echo " Copying mongo repos "
-  cp $dirct/config/mongo.repo /etc/yum.repos.d/mongo.repo
-  status $?
-
-  sudo dnf install mongodb-org-shell -y
-  status $?
-
-  mongo --host MONGODB-SERVER-IPADDRESS </app/schema/catalogue.js
-  status $?
+  
 }
 
 
