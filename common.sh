@@ -50,7 +50,7 @@ cp * /usr/share/nginx/html &>> ${log}
 #unzip /tmp/frontend.zip
 systemctl enable nginx
 systemctl start nginx
-cp ${dirct}/config/${component}.conf /etc/nginx/default.d/${component}.conf
+cp ${dirct}/config/roboshop.conf /etc/nginx/default.d/roboshop.conf
 systemctl restart nginx
 }
 golang()
