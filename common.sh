@@ -1,5 +1,6 @@
 dirct=$(pwd)
-rm -rf /tmp/log_file
+cd /tmp/
+rm -rf *
 touch /tmp/log_file
 
 
