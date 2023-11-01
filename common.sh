@@ -18,7 +18,9 @@ aftifacts_setup()
   curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip &>> ${log}
 
 
-  if [! -d "/app" ]; then
+  if [ -d "/app" ]; then
+    echo " avalable app directory"
+  else
    echo " Create app directory"
    mkdir /app
   fi
