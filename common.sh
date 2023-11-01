@@ -149,3 +149,31 @@ java()
 
 }
 
+
+nodejs()
+{
+  echo " Installing Nodejs"
+  yum install https://rpm.nodesource.com/pub_21.x/nodistro/repo/nodesource-release-nodistro-1.noarch.rpm -y
+  yum install nodejs -y --setopt=nodesource-nodejs.module_hotfixes=1
+  status $?
+
+  aftifacts_setup
+
+  echo " Installing "
+  npm install
+  status $?
+
+  systemd_config
+
+  echo " Copying mongo repos "
+  cp $dirct/config/mongo.repo /etc/yum.repos.d/mongo.repo
+  status $?
+
+  sudo dnf install mongodb-org-shell -y
+  status $?
+
+  mongo --host MONGODB-SERVER-IPADDRESS </app/schema/catalogue.js
+  status $?
+}
+
+
