@@ -16,7 +16,12 @@ aftifacts_setup()
 
   curl -L -o /tmp/dispatch.zip https://roboshop-artifacts.s3.amazonaws.com/dispatch.
 
-  mkdir /app
+
+  if [! -d "/app" ]; then
+   echo " Create app directory"
+   mkdir /app
+  fi
+
   rm -rf /app/*
   cd /app
 
