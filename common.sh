@@ -41,17 +41,22 @@ systemd_config()
 }
 nginx()
 {
-dnf install nginx -y &>> ${log}
+  echo " Istalling Nginx"
+  dnf install nginx -y &>> ${log}
 #curl -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}.zip
-rm -rf /usr/share/nginx/html* &>> ${log}
-aftifacts_setup
-cp * /usr/share/nginx/html &>> ${log}
+  echo " Removing contents from Nginx/html "
+  rm -rf /usr/share/nginx/html* &>> ${log}
+  echo " Artifact setup "
+  aftifacts_setup
+  cp * /usr/share/nginx/html &>> ${log}
 #yum install unzip -y
 #unzip /tmp/frontend.zip
-systemctl enable nginx
-systemctl start nginx
-cp ${dirct}/config/roboshop.conf /etc/nginx/default.d/roboshop.conf
-systemctl restart nginx
+  echo " Enabling nginx "
+  systemctl enable nginx
+  systemctl start nginx
+  echo "copying roboshop configuraton file"
+  cp ${dirct}/config/roboshop.conf /etc/nginx/default.d/roboshop.conf
+  systemctl restart nginx
 }
 golang()
 {
