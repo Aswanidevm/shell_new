@@ -5,7 +5,7 @@ log=/tmp/log_file.txt
 
 status()
 {
-  if [ $1 -eq 0]; then
+  if [ $1 -eq 0 ]; then
     echo " Sucess"
   else
     echo " failed with code $1 "
