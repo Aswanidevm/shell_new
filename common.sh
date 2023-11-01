@@ -118,3 +118,34 @@ golang()
 
 }
 
+java()
+{
+  echo " Installing Maven"
+  dnf install maven -y
+  status $?
+
+  echo " Artifacts basic setup"
+  artifacts_setup
+
+  mvn clean package
+  status $?
+
+  echo " Renaming shipping.jar file"
+  mv target/shipping-1.0.jar shipping.jar
+  status $?
+
+  systemd_config
+
+  echo " Installing1 mysql"
+  dnf install mysql -y
+  status $?
+
+  echo " importing schema"
+  mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -pRoboShop@1 < /app/schema/shipping.sql
+  status $?
+
+  systemctl restart shipping
+
+
+}
+
