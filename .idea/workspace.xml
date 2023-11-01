@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c71bccc7-a006-4784-b210-f36c2c010a37" name="Changes" comment="front">
-      <change afterPath="$PROJECT_DIR$/config/payment.service" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/shipping.service" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment.sh" beforeDir="false" afterPath="$PROJECT_DIR$/payment.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rabbitmq.sh" beforeDir="false" afterPath="$PROJECT_DIR$/rabbitmq.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shipping.sh" beforeDir="false" afterPath="$PROJECT_DIR$/shipping.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dispatch.sh" beforeDir="false" afterPath="$PROJECT_DIR$/dispatch.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -328,7 +323,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698822336792</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="front">
+      <option name="closed" value="true" />
+      <created>1698823111629</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1698823111629</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

@@ -10,3 +10,6 @@ go mod init dispatch
 go get
 go build
 cp $dirct/config/dispatch.service /etc/systemd/system/dispatch.service
+systemctl daemon-reload
+systemctl enable dispatch
+systemctl start dispatch
