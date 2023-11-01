@@ -1,12 +1,12 @@
 dirct=$(pwd)
 cd /tmp/
 rm -rf *
-touch /tmp/log_file
+log=/tmp/log_file.txt
 
 
 aftifacts_setup()
 {
-  getent passwd roboshop &>> log_file
+  getent passwd roboshop &>> ${log}
 
   if [ $? -eq 0 ]; then
       echo "yes the user exists"
@@ -15,7 +15,7 @@ aftifacts_setup()
       useradd roboshop
   fi
 
-  curl -L -o /tmp/dispatch.zip https://roboshop-artifacts.s3.amazonaws.com/dispatch.
+  curl -L -o /tmp/${component}.zip https://roboshop-artifacts.s3.amazonaws.com/${component}
 
 
   if [! -d "/app" ]; then
@@ -26,7 +26,7 @@ aftifacts_setup()
   rm -rf /app/*
   cd /app
 
-  unzip /tmp/dispatch.zip
+  unzip /tmp/${component}.zip
 
 }
 
@@ -37,8 +37,8 @@ aftifacts_setup
 go mod init dispatch
 go get
 go build
-cp $dirct/config/$component.service /etc/systemd/system/$component.service
+cp ${dirct}/config/${component}.service /etc/systemd/system/${component}.service
 systemctl daemon-reload
-systemctl enable dispatch
-systemctl start dispatch
+systemctl enable ${component}
+systemctl start ${component}
 }
